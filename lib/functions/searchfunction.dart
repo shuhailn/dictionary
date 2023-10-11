@@ -11,6 +11,7 @@ Future<List<SearchWordModel>> getSearchWord(String searchWord) async {
 
   //convert the box values into list
   List<SearchWordModel> meaningWord = dictionaryBox.values.toList();
+  print(meaningWord);
 
   //go through the list for chekcing the value
   meaningWord.forEach((element) {
