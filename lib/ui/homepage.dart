@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
   late Future<List<SearchWordModel>> dataFuture = Future.value([]);
 
   @override
-  
   Widget build(BuildContext context) {
     TextEditingController searchItemController = TextEditingController();
     return Scaffold(
@@ -134,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                             var searchWordListFuture = getSearchWord(
                                 searchItemController.text.toString());
                             dataFuture = searchWordListFuture;
-                            print(searchWordListFuture);
+                            
                           });
                         },
                       )
