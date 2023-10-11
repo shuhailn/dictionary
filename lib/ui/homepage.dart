@@ -90,7 +90,24 @@ class _HomePageState extends State<HomePage> {
                         return ListTile(
                           title: Text(item.englishWword),
                           subtitle: Text(item.malayalamWord),
-                          // Add more details as needed
+                          
+                          trailing: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color: Colors.blue[200],
+                              borderRadius:
+                                  BorderRadiusDirectional.circular(10),
+                            ),
+                            child: Center(
+                              child: Text(
+                                item.wordType.toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                          ),
                         );
                       },
                     );
@@ -131,7 +148,9 @@ class _HomePageState extends State<HomePage> {
                           setState(() {
                             // Update dataFuture with the new search term
                             var searchWordListFuture = getSearchWord(
-                                searchItemController.text.toString());
+                                searchItemController.text
+                                    .toString()
+                                    .toLowerCase());
                             dataFuture = searchWordListFuture;
                             
                           });
