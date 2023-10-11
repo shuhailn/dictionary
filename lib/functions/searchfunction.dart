@@ -1,7 +1,7 @@
 import 'package:dictionary/models/searchwordmodel.dart';
 import 'package:hive/hive.dart';
 
-Future <List<SearchWordModel>> getSearchWord(String searchWord)async {
+Future<List<SearchWordModel>> getSearchWord(String searchWord) async {
   //create new list  for adding found values
   List<SearchWordModel> foundItems = [];
 
@@ -9,24 +9,16 @@ Future <List<SearchWordModel>> getSearchWord(String searchWord)async {
   final Box<SearchWordModel> dictionaryBox =
       Hive.box<SearchWordModel>("searchWordBox");
 
-      //convert the box values into list 
+  //convert the box values into list
   List<SearchWordModel> meaningWord = dictionaryBox.values.toList();
-  print(meaningWord);
-  print(meaningWord.length);
-  
-
-
-
-
 
   //go through the list for chekcing the value
   meaningWord.forEach((element) {
     if (element.englishWword == searchWord) {
-    // if the element is found add to the list that we created
+      // if the element is found add to the list that we created
       foundItems.add(element);
     }
   });
-  print(foundItems.toList());
-  print(foundItems.length);
+
   return foundItems;
 }
