@@ -29,13 +29,13 @@ class _DataPageState extends State<DataPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Data Page'),
+        title: const Text('Data Page'),
       ),
       body: FutureBuilder<List<SearchWordModel>>(
         future: dataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
@@ -43,7 +43,7 @@ class _DataPageState extends State<DataPage> {
               child: Text('Error: ${snapshot.error}'),
             );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(
+            return const Center(
               child: Text('No data available.'),
             );
           } else {
@@ -55,7 +55,23 @@ class _DataPageState extends State<DataPage> {
                 return ListTile(
                   title: Text(item.englishWword),
                   subtitle: Text(item.malayalamWord),
-                  // Add more details as needed
+                  trailing: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 163, 160, 150),
+                      borderRadius: BorderRadiusDirectional.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        item.wordType,
+                        style: TextStyle(
+                          fontSize: 25,
+                        ),
+                      ),
+                    ),
+                  ),
+                  
                 );
               },
             );
