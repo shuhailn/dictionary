@@ -1,7 +1,7 @@
 import 'package:csv/csv.dart';
 import 'package:dictionary/models/searchwordmodel.dart';
 import 'dart:convert';
-import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 
@@ -23,14 +23,26 @@ Future<void> loadData() async {
   List<List<dynamic>> fields = const CsvToListConverter().convert(content);
 
   // Iterate through the list
-  fields.forEach((element) {
-    final word = SearchWordModel(
-      englishWword: element[1].toString(),
-      key: element[0].toString(),
-      wordType: element[2].toString(),
-      malayalamWord: element[3].toString(),
+
+  for (int element = 0; element < fields.length; element++) {
+  final word = SearchWordModel(
+      englishWword: fields[element][1].toString(),
+      key: fields[element][0].toString(),
+      wordType: fields[element][2].toString(),
+      malayalamWord: fields[element][3].toString(),
     );
     dictionaryBox.add(word);
-  });
+
+  }
+  // fields.forEach((element) {
+  //   final word = SearchWordModel(
+  //     englishWword: element[1].toString(),
+  //     key: element[0].toString(),
+  //     wordType: element[2].toString(),
+  //     malayalamWord: element[3].toString(),
+  //   );
+  //   dictionaryBox.add(word);
+  
   print("datalodaer function is called");
+  Future.delayed(const Duration(seconds: 5));
 }

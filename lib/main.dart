@@ -8,6 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //initialize hive 
   await Hive.initFlutter();
   //register the type adapter
   Hive.registerAdapter(SearchWordModelAdapter());
@@ -18,7 +19,7 @@ void main() async {
   if (dictionaryBox.isEmpty) {
     loadData();
   }
-  getSearchWord("a bed roses");
+  
 
   runApp(const MyApp());
 }

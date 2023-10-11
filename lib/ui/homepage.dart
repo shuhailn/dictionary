@@ -1,31 +1,32 @@
+import 'package:dictionary/functions/searchfunction.dart';
 import 'package:dictionary/shared/drawer/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:dictionary/models/searchwordmodel.dart';
 
 import '../shared/bottomNavBar/bottomNavBar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late Future<List<SearchWordModel>> dataFuture = Future.value([]);
+
+  @override
+  
   Widget build(BuildContext context) {
     TextEditingController searchItemController = TextEditingController();
     return Scaffold(
-      drawer: MainDrawer(),
-      appBar: AppBar(
-        elevation: 0,
-        title: const Text("Malayalam Dictionary"),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: Icon(Icons.share),
-          )
-        ],
-      ),
+      drawer: const MainDrawer(),
+      appBar: _appBar(),
       body: Stack(children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 7,
             ),
             Center(
@@ -46,10 +47,10 @@ class HomePage extends StatelessWidget {
                         ),
                         width: 150,
                         height: 50,
-                        child: Center(child: Text("ENG>MAL")),
+                        child: const Center(child: Text("ENG>MAL")),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     Container(
@@ -59,47 +60,122 @@ class HomePage extends StatelessWidget {
                       ),
                       width: 150,
                       height: 50,
-                      child: Center(child: Text("MAL>ENG")),
+                      child: const Center(child: Text("MAL>ENG")),
                     ),
                   ],
                 ),
               ),
             ),
             Expanded(
-              child: ListView(
-                children: [
-                  ListTile(
-                    title: Text("data"),
-                  ),
-                  ListTile(
-                    title: Text("data"),
-                  ),
-                  ListTile(
-                    title: Text("data"),
-                  ),
-                  ListTile(
-                    title: Text("data"),
-                  ),
-                ],
+              child: FutureBuilder<List<SearchWordModel>>(
+                future: dataFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text('No data available.'),
+                    );
+                  } else {
+                    // Display your data here
+                    return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        final item = snapshot.data![index];
+                        return ListTile(
+                          title: Text(item.englishWword),
+                          subtitle: Text(item.malayalamWord),
+                          // Add more details as needed
+                        );
+                      },
+                    );
+                  }
+                },
               ),
             ),
-            SearchBar(searchItemController: searchItemController)
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 70,
+                  width: 400,
+                  color: Colors.blue,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Icon(Icons.history),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(32),
+                        ),
+                        width: 280,
+                        height: 50,
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            hintText: "Type English Word",
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.all(10),
+                          ),
+                          controller: searchItemController,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.search),
+                        onPressed: () {
+                          setState(() {
+                            // Update dataFuture with the new search term
+                            var searchWordListFuture = getSearchWord(
+                                searchItemController.text.toString());
+                            dataFuture = searchWordListFuture;
+                            print(searchWordListFuture);
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ]),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: const BottomNavBar(),
+    );
+  }
+
+  AppBar _appBar() {
+    return AppBar(
+      elevation: 0,
+      title: const Text("Malayalam Dictionary"),
+      actions: const [
+        Padding(
+          padding: EdgeInsets.only(right: 20),
+          child: Icon(Icons.share),
+        )
+      ],
     );
   }
 }
 
-class SearchBar extends StatelessWidget {
+class SearchBar extends StatefulWidget {
   const SearchBar({
     super.key,
     required this.searchItemController,
   });
 
+  @override
+  State<SearchBar> createState() => _SearchBarState();
   final TextEditingController searchItemController;
+}
 
+class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -112,7 +188,7 @@ class SearchBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Icon(Icons.history),
+              const Icon(Icons.history),
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -121,15 +197,25 @@ class SearchBar extends StatelessWidget {
                 width: 280,
                 height: 50,
                 child: TextField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Type English Word",
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.all(10),
                   ),
-                  controller: searchItemController,
+                  controller: widget.searchItemController,
                 ),
               ),
-              Icon(Icons.mic)
+              IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () {
+                  setState(() {
+                    // Update dataFuture with the new search term
+                    var searchWordListFuture = getSearchWord(
+                        widget.searchItemController.text.toString());
+                    print(searchWordListFuture);
+                  });
+                },
+              )
             ],
           ),
         ),
