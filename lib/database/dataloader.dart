@@ -26,10 +26,10 @@ Future<void> loadData() async {
 
   for (int element = 0; element < fields.length; element++) {
   final word = SearchWordModel(
-      englishWword: fields[element][1].toString(),
-      key: fields[element][0].toString(),
-      wordType: fields[element][2].toString(),
-      malayalamWord: fields[element][3].toString(),
+      englishWword: fields[element][1].toString().toLowerCase(),
+      key: fields[element][0].toString().toLowerCase(),
+      wordType: fields[element][2].toString().toLowerCase(),
+      malayalamWord: fields[element][3].toString().toLowerCase(),
     );
     dictionaryBox.add(word);
 
