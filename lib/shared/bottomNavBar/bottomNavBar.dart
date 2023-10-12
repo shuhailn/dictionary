@@ -13,21 +13,21 @@ class BottomNavBar extends StatelessWidget {
               Icons.radio_button_off,
               size: 20,
             ),
-            label: "Start With",
+            label: "Search",
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.radio_button_off,
+              Icons.book,
               size: 20,
             ),
-            label: "Contains",
+            label: "Dictionary",
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.radio_button_off,
+              Icons.settings,
               size: 20,
             ),
-            label: "End With",
+            label: "Settings",
           ),
         ],
         onTap: (int idx) {
@@ -37,10 +37,11 @@ class BottomNavBar extends StatelessWidget {
 
               break;
             case 1:
-              Navigator.pushNamed(context, '/demo');
+              Navigator.pushNamed(context, '/dictionary');
               print("2 pressed");
               break;
             case 2:
+              Navigator.pushNamed(context, '/settings');
               print("2 is pressed");
               break;
           }
