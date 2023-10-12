@@ -1,3 +1,4 @@
+import 'package:dictionary/shared/bottomNavBar/bottomNavBar.dart';
 import 'package:flutter/material.dart';
 import 'package:dictionary/models/searchwordmodel.dart';
 import 'package:hive/hive.dart';
@@ -28,6 +29,7 @@ class _DataPageState extends State<DataPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavBar(),
       appBar: AppBar(
         title: const Text('Data Page'),
       ),

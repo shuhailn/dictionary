@@ -1,10 +1,12 @@
 
 
-import 'package:dictionary/ui/demo.dart';
+import 'package:dictionary/ui/mdictionary.dart';
 import 'package:dictionary/ui/homepage.dart';
+import 'package:dictionary/ui/settings.dart';
 
 var appRoutes = {
   '/ ': (context) => const HomePage(),
-  '/demo': (context) =>  DataPage(),
+  '/dictionary': (context) =>  DataPage(),
+  '/settings': (context) =>  Settings(),
   
 };

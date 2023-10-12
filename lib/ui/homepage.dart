@@ -14,6 +14,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<List<SearchWordModel>> dataFuture = Future.value([]);
+  late Future<List<SearchWordModel>> history = Future.value([]);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +152,8 @@ class _HomePageState extends State<HomePage> {
                             var searchWordListFuture = getSearchWord(
                                 searchItemController.text
                                     .toString()
-                                    .toLowerCase());
+                                    .toLowerCase(),
+                                'contains');
                             dataFuture = searchWordListFuture;
                             
                           });
@@ -182,62 +185,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class SearchBar extends StatefulWidget {
-  const SearchBar({
-    super.key,
-    required this.searchItemController,
-  });
-
-  @override
-  State<SearchBar> createState() => _SearchBarState();
-  final TextEditingController searchItemController;
-}
-
-class _SearchBarState extends State<SearchBar> {
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          height: 70,
-          width: 400,
-          color: Colors.blue,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const Icon(Icons.history),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                width: 280,
-                height: 50,
-                child: TextField(
-                  decoration: const InputDecoration(
-                    hintText: "Type English Word",
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(10),
-                  ),
-                  controller: widget.searchItemController,
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () {
-                  setState(() {
-                    // Update dataFuture with the new search term
-                    var searchWordListFuture = getSearchWord(
-                        widget.searchItemController.text.toString());
-                    print(searchWordListFuture);
-                  });
-                },
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
