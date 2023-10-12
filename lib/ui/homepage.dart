@@ -1,5 +1,6 @@
 import 'package:dictionary/functions/searchfunction.dart';
 import 'package:dictionary/shared/drawer/drawer.dart';
+import 'package:dictionary/ui/history.dart';
 import 'package:flutter/material.dart';
 import 'package:dictionary/models/searchwordmodel.dart';
 
@@ -14,8 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<List<SearchWordModel>> dataFuture = Future.value([]);
-  late Future<List<SearchWordModel>> history = Future.value([]);
-  
+  late List history = [];
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,6 @@ class _HomePageState extends State<HomePage> {
                         return ListTile(
                           title: Text(item.englishWword),
                           subtitle: Text(item.malayalamWord),
-                          
                           trailing: Container(
                             width: 30,
                             height: 30,
@@ -127,7 +126,18 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Icon(Icons.history),
+                      IconButton(
+                        icon: const Icon(Icons.history),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => History(
+                                      history: history,
+                                    )),
+                          );
+                        },
+                      ),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -154,8 +164,9 @@ class _HomePageState extends State<HomePage> {
                                     .toString()
                                     .toLowerCase(),
                                 'contains');
+                            history.add(searchItemController.text.toString());
                             dataFuture = searchWordListFuture;
-                            
+                            print(history);
                           });
                         },
                       )
@@ -184,4 +195,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
