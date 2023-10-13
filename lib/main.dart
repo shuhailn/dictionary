@@ -1,8 +1,8 @@
 import 'package:dictionary/database/dataloader.dart';
-import 'package:dictionary/functions/searchfunction.dart';
+import 'package:dictionary/controller/searchfunction.dart';
 import 'package:dictionary/models/searchwordmodel.dart';
 import 'package:dictionary/shared/routes/routes.dart';
-import 'package:dictionary/ui/homepage.dart';
+import 'package:dictionary/view/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 

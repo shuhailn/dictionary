@@ -1,9 +1,9 @@
 
 
-import 'package:dictionary/ui/history.dart';
-import 'package:dictionary/ui/mdictionary.dart';
-import 'package:dictionary/ui/homepage.dart';
-import 'package:dictionary/ui/settings.dart';
+import 'package:dictionary/view/history.dart';
+import 'package:dictionary/view/mdictionary.dart';
+import 'package:dictionary/view/homepage.dart';
+import 'package:dictionary/view/settings.dart';
 
 var appRoutes = {
   '/ ': (context) => const HomePage(),
