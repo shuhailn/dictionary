@@ -10,7 +10,7 @@ class BottomNavBar extends StatelessWidget {
         items: [
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.radio_button_off,
+              Icons.search,
               size: 20,
             ),
             label: "Search",

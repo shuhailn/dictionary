@@ -44,11 +44,7 @@ class _HistoryState extends State<History> {
                       ),
                     ),
                   );
-                  if (widget.history.isEmpty) {
-                    return Center(
-                      child: Text("Search Word to show up here"),
-                    );
-                  }
+                 
                 }
               },
             ),
