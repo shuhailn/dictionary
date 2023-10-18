@@ -6,6 +6,7 @@ import 'package:dictionary/view/history.dart';
 import 'package:dictionary/view/history.dart';
 import 'package:flutter/material.dart';
 import 'package:dictionary/shared/routes/routes.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MalayalamSearchPage extends StatefulWidget {
   const MalayalamSearchPage({super.key});
@@ -324,10 +325,20 @@ class _MalayalamSearchPageState extends State<MalayalamSearchPage> {
       elevation: 0,
       backgroundColor: Colors.black,
       title: const Text("Malayalam Dictionary"),
-      actions: const [
+      actions: [
         Padding(
           padding: EdgeInsets.only(right: 20),
-          child: Icon(Icons.share),
+          child: IconButton(
+            icon: Icon(
+              Icons.share,
+            ),
+            onPressed: () async {
+              await Share.share(
+                  "https://play.google.com/store/apps/details?id=info.jobquiz.english_malayalam_dictionary",
+                  subject:
+                      'https://play.google.com/store/apps/details?id=info.jobquiz.english_malayalam_dictionary');
+            },
+          ),
         )
       ],
     );

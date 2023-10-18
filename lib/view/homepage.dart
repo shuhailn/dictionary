@@ -4,6 +4,8 @@ import 'package:dictionary/view/history.dart';
 import 'package:dictionary/view/malayalamsearch.dart';
 import 'package:flutter/material.dart';
 import 'package:dictionary/models/searchwordmodel.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../shared/bottomNavBar/bottomNavBar.dart';
 
@@ -24,6 +26,8 @@ class _HomePageState extends State<HomePage> {
   String searchLanguage = 'english';
   Color engColor = Colors.blue;
   Color malColor = Colors.grey;
+  var appUrl =
+      'https://play.google.com/store/apps/details?id=info.jobquiz.english_malayalam_dictionary';
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +72,6 @@ class _HomePageState extends State<HomePage> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                      
-                            
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -99,7 +101,6 @@ class _HomePageState extends State<HomePage> {
                 height: 3,
                 color: Colors.black,
                 thickness: 1,
-                
               ),
               Expanded(
                 child: Container(
@@ -156,11 +157,9 @@ class _HomePageState extends State<HomePage> {
               Container(
                 height: 120,
                 child: Align(
-                  
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     height: 110,
-                    
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       // mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -312,7 +311,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              
             ],
           ),
         ]),
@@ -325,10 +323,17 @@ class _HomePageState extends State<HomePage> {
     return AppBar(
       elevation: 0,
       title: const Text("Malayalam Dictionary"),
-      actions: const [
+      actions: [
         Padding(
           padding: EdgeInsets.only(right: 20),
-          child: Icon(Icons.share),
+          child: IconButton(
+            icon: Icon(Icons.share),
+            onPressed: () async {
+              await Share.share("https://play.google.com/store/apps/details?id=info.jobquiz.english_malayalam_dictionary",
+                  subject:
+                      'https://play.google.com/store/apps/details?id=info.jobquiz.english_malayalam_dictionary');
+            },
+          ),
         )
       ],
     );
